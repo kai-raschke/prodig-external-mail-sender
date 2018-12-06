@@ -1,0 +1,19 @@
+{
+  "name": "prodig-external-mail-sender",
+  "version": "0.2.1",
+  "description": "Camunda external task for sending mails.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Kai Raschke",
+  "license": "MIT",
+  "dependencies": {
+    "@kai-raschke/prodig-external-deps": "^0.3.5",
+    "email-templates": "^4.0.4",
+    "handlebars": "^4.0.12",
+    "mjml": "^4.2.0",
+    "nodemailer": "^4.6.7"
+  }
+}

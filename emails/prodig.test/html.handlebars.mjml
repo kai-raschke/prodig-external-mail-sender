@@ -1,0 +1,12 @@
+<mjml>
+    <mj-body>
+        <mj-section padding-bottom="0">
+            <mj-column>
+                <mj-text align="justify">
+                    <div>Test mjml</div>
+                    <div>Email to {{to}}</div>
+                </mj-text>
+            </mj-column>
+        </mj-section>
+    </mj-body>
+</mjml>

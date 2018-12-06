@@ -1,0 +1,29 @@
+{
+  "apps": [{
+    "name": "prodig-external-mail-sender",
+    "script": "./index.js",
+    "watch": false,
+    "env": {
+      "NODE_ENV": "development",
+      "MAX_TASK": 5,
+      "INTERVAL": 2000,
+      "ASYNC_RESPONSE_TIMEOUT": 10000,
+      "BASE_URL": "http://localhost:8080/engine-rest",
+      "AUTH": true,
+      "USER": "demo",
+      "PASS": "demo",
+      "SMTP_SERVER": "mail.example.net",
+      "SMTP_PORT": "25",
+      "SMTP_SECURE": "false",
+      "SMTP_REQUIRE_TLS": "true",
+      "FORCE_REAL_SEND": "false",
+      "SMTP_AUTH": "false",
+      "SMTP_USER": "",
+      "SMTP_PASS": "",
+      "MAIL_STAGING": "my.address@example.net",
+      "MAIL_FROM": "sender@example.net",
+	  "LOCK_DURATION": 10000,
+      "TOPIC": "test.external.mail.sender"
+    }
+  }]
+}

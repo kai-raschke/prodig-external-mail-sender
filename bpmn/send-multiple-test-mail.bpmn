@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_131ao3z" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.3">
+  <bpmn:process id="send-multiple-test-mail" name="Send multiple test mails" isExecutable="true" camunda:versionTag="3">
+    <bpmn:startEvent id="StartEvent_1605zx9">
+      <bpmn:outgoing>SequenceFlow_1d5bd9y</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_1rlb8qy">
+      <bpmn:incoming>SequenceFlow_1ucnugb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1d5bd9y" sourceRef="StartEvent_1605zx9" targetRef="Task_16e9c7t" />
+    <bpmn:sequenceFlow id="SequenceFlow_1ucnugb" sourceRef="ServiceTask_0ev07el" targetRef="EndEvent_1rlb8qy" />
+    <bpmn:serviceTask id="ServiceTask_0ev07el" name="Send multiple mails" camunda:type="external" camunda:topic="test.external.mail.sender">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="mailTemplate">prodig.test</camunda:inputParameter>
+          <camunda:inputParameter name="mailVariables">${collectionElement}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_13j38au</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1ucnugb</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="emailList" camunda:elementVariable="collectionElement" />
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_13j38au" sourceRef="Task_16e9c7t" targetRef="ServiceTask_0ev07el" />
+    <bpmn:scriptTask id="Task_16e9c7t" name="Generate email list" scriptFormat="javascript">
+      <bpmn:incoming>SequenceFlow_1d5bd9y</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_13j38au</bpmn:outgoing>
+      <bpmn:script>var ArrayList = Java.type("java.util.ArrayList")
+var addressArrayList = new ArrayList()
+
+//Semicolon separated list of emails
+var list = "your.mail@example.net;your.mail.2@example.net"
+
+var emails = list.split(';')
+
+for (i in emails) {
+    var email = emails[i]
+
+    try {
+        var addressObject = {
+            to: email
+        }
+
+        var addressObjectStringified = JSON.stringify(addressObject)
+        addressArrayList.add(addressObjectStringified)
+    } catch (ex) {
+        print(ex)
+    }
+}
+
+execution.setVariable('emailList', addressArrayList)</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="send-multiple-test-mail">
+      <bpmndi:BPMNShape id="StartEvent_1605zx9_di" bpmnElement="StartEvent_1605zx9">
+        <dc:Bounds x="86" y="101" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1rlb8qy_di" bpmnElement="EndEvent_1rlb8qy">
+        <dc:Bounds x="471" y="101" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1d5bd9y_di" bpmnElement="SequenceFlow_1d5bd9y">
+        <di:waypoint x="122" y="119" />
+        <di:waypoint x="167" y="119" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ucnugb_di" bpmnElement="SequenceFlow_1ucnugb">
+        <di:waypoint x="418" y="119" />
+        <di:waypoint x="471" y="119" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0ev07el_di" bpmnElement="ServiceTask_0ev07el">
+        <dc:Bounds x="318" y="79" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_13j38au_di" bpmnElement="SequenceFlow_13j38au">
+        <di:waypoint x="267" y="119" />
+        <di:waypoint x="318" y="119" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ScriptTask_1i7vfng_di" bpmnElement="Task_16e9c7t">
+        <dc:Bounds x="167" y="79" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
