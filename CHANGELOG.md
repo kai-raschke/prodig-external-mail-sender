@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2 - 12/10/2018
+
+- Added simple test case with smtp server
+
 ## 0.2.1 - 12/6/2018
 
 - Update readme
