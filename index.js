@@ -1,6 +1,6 @@
 'use strict';
 
-const { client, log, gray } = require('@kai-raschke/prodig-external-deps');
+const { client, log, gray } = require('@kai-raschke/prodig-external-deps')();
 const { Variables } = require('camunda-external-task-client-js');
 const nodemailer = require('nodemailer'),
     emailTemplates = require('email-templates'),

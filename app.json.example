@@ -23,7 +23,10 @@
       "MAIL_STAGING": "my.address@example.net",
       "MAIL_FROM": "sender@example.net",
 	  "LOCK_DURATION": 10000,
-      "TOPIC": "test.external.mail.sender"
+      "TOPIC": "test.external.mail.sender",
+      "LOG_CAMUNDA": "false",
+      "LOG_FILE": "false",
+      "LOG_GRAYLOG": "false"
     }
   }]
 }

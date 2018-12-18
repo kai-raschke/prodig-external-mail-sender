@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0 - 12/18/2018
+
+- Enable/disable logging through env variables with new external-deps package
+- Test deployment and email sending with mock mail server and `run-camunda` package
+
 ## 0.2.2 - 12/10/2018
 
 - Added simple test case with smtp server

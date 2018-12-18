@@ -1,5 +1,5 @@
 const fs = require('fs'), path = require('path');
-const { log } = require('@kai-raschke/prodig-external-deps');
+const { log } = require('@kai-raschke/prodig-external-deps')();
 const mjml2html = require('mjml'), //.default;
     handlebars = require('handlebars');
 

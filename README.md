@@ -320,6 +320,8 @@ Settings are string values (e. g. "true" for bool) and will be parsed if necessa
 | MAIL_FROM | {String} | - | X | Mail address to send from |
 | MAIL_STAGING | {String} | MAIL_FROM | | Overwrites 'to' address in staging mode |
 | TOPIC | {String} | - | | Camunda External Task topic |
+| LOG_CAMUNDA | {Boolean} | - | | Use Camunda External Client log |
+| LOG_FILE | {Boolean} | - | | Use bunyan file/console log |
 
 ## TODO
 
@@ -327,7 +329,7 @@ Settings are string values (e. g. "true" for bool) and will be parsed if necessa
 - Use .env file if no app.json is available
 - Validate nodemailer response
 - Enable more customized logging
-- Consider unit tests
+- Test useful cases (refactor current test and simplify execution)
 - Production testing
 
 ## License
@@ -336,4 +338,4 @@ MIT
 
 ## Credits
 
-Kai Raschke, Johannes Damarovsky
+Kai Raschke, Johannes Damarowsky
