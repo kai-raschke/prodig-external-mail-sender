@@ -1,10 +1,12 @@
 'use strict';
 
-const { client, log, gray } = require('@kai-raschke/prodig-external-deps')();
 const { Variables } = require('camunda-external-task-client-js');
 const nodemailer = require('nodemailer'),
     emailTemplates = require('email-templates'),
     emailRenderer = require('./email-renderer');
+const { client, log, gray } = require('@kai-raschke/prodig-external-deps')(
+    /* Optional config object */
+);
 
 let transporter, transportForce;
 
@@ -128,10 +130,7 @@ let main = async function({ task, taskService }){
  * Anonymous start function, subscribes to topic by given NODE_ENV
  */
 (function start(){
-    let Client;
     try {
-        Client = client.init();
-
         //nodemail smtp settings
         let smtpWorkflowConfig = {
             host: process.env.SMTP_SERVER, //defaults to localhost
@@ -169,10 +168,8 @@ let main = async function({ task, taskService }){
             require('./mock').start(main);
         }
 
-        Client.start();
-        if(Client){
-            Client.subscribe(process.env.TOPIC, main);
-        }
+        client.subscribe(process.env.TOPIC, main);
+        client.start();
     } catch (e) {
         log.error(e);
     }

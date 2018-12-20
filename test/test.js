@@ -29,7 +29,7 @@ describe('Array', function() {
         gray = deps.gray;
         emailRenderer = require('./../email-renderer');
 
-        Client = client.init();
+        Client = client;
 
         serverOptions = {
             name: 'localhost',
