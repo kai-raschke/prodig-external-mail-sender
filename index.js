@@ -49,9 +49,13 @@ let main = async function({ task, taskService }){
             transporter = transportForce;
         }
 
+        const MAIL_FROM_ALIAS = process.env.MAIL_FROM_ALIAS || mailVariables.alias || fromAlias; //by priorities
+        const from = (MAIL_FROM_ALIAS ? { //Use Alias if there was one delivered
+            name: MAIL_FROM_ALIAS,
+            address: process.env.MAIL_FROM
+        } : process.env.MAIL_FROM);
         //If staging mode, overwrite receiver with static testing address, if not set, send to yourself
         const MAIL_STAGING = (process.env.MAIL_STAGING ? process.env.MAIL_STAGING : from); //In staging no real mail shall be sent
-        const MAIL_FROM_ALIAS = process.env.MAIL_FROM_ALIAS || mailVariables.alias || fromAlias; //by priorities
 
         let envelope = {
             to: (process.env.NODE_ENV === 'staging' ? MAIL_STAGING : mailVariables.to || to),
