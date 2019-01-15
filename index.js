@@ -34,12 +34,26 @@ let main = async function({ task, taskService }){
         let text                = task.variables.get("text")            || undefined;
         let html                = task.variables.get("html")            || undefined;
 
+        let attachments          = task.variables.get('attachments')      || "[]"; //Nodemailer attachments format https://nodemailer.com/message/attachments/
+
         let mailTemplate        = task.variables.get("mailTemplate")    || undefined;
         let mailVariables       = task.variables.get("mailVariables")   || "{}";
         let mailOptions         = task.variables.get("mailOptions")     || "{}";
 
         mailVariables   = JSON.parse(mailVariables);
         mailOptions     = JSON.parse(mailOptions);
+        attachments      = JSON.parse(attachments);
+
+        //Extra option for attachment in addition to nodemailers options
+        //If a variable is given, try to find it and get the buffer from
+        for(let i = -1; ++i < attachments.length;){
+            let attachment = attachments[i];
+            if(attachment.variable){
+                let fileVar = task.variables.get(attachment.variable);
+                if(fileVar)
+                    attachment.content = fileVar.content; //attach Buffer from Camunda file variable
+            }
+        }
 
         mailOptions.forceRealSend   = (process.env.FORCE_REAL_SEND === 'true' ? true : mailOptions.forceRealSend || false); //Force smtp transporter in dev mode
         mailOptions.returnMessageId = mailOptions.returnMessageId || false; //return the Message ID of sent mail
@@ -100,7 +114,8 @@ let main = async function({ task, taskService }){
                 replyTo:envelope.replyTo,
                 subject:template.subject,
                 text:   template.text,
-                html:   template.html
+                html:   template.html,
+                attachments
             });
 
             if(mail.accepted){

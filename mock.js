@@ -71,6 +71,7 @@ const requestHandler = (request, response) => {
                 t.variables.set('mailTemplate', content.mailTemplate);
                 t.variables.set('mailVariables', JSON.stringify(content.mailVariables));
                 t.variables.set('mailOptions', JSON.stringify((content.mailOptions || {})));
+                t.variables.set('attachments', JSON.stringify((content.attachments || [])));
 
                 let service = new _taskService();
                 senderFn({task: t, taskService: service});
