@@ -94,7 +94,7 @@ let main = async function({ task, taskService }){
                 });
 
                 template = await emailRender.renderAll(mailTemplate, mailVariables);
-                log.debug(`Render templates done`);
+                log.debug(`Render file templates done: ${JSON.stringify(template.subject)} from ${mailTemplate}`);
             } catch(ex){
                 await taskService.handleFailure(task, "An error occured while rendering the templates");
             }
@@ -103,6 +103,7 @@ let main = async function({ task, taskService }){
             template.subject = subject;
             template.text = text;
             template.html = html;
+            log.debug('Render file from fixed variables');
         }
 
         try{
