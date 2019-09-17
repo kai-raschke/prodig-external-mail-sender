@@ -1,6 +1,6 @@
 {
   "name": "prodig-external-mail-sender",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Camunda external task for sending mails.",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "dependencies": {
     "@kai-raschke/prodig-external-deps": "^0.5.0",
     "email-templates": "^4.0.4",
-    "handlebars": "^4.0.12",
+    "handlebars": "^4.2.0",
     "mjml": "^4.2.0",
     "nodemailer": "^4.6.7"
   },
