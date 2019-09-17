@@ -6,11 +6,12 @@ const mjml2html = require('mjml'), //.default;
 function render (view, locals) {
     return new Promise((res, rej) => {
         log.debug(`Try view ${view}`);
+        let emailPath = path.join(__dirname, 'emails', view.split('/')[0], 'html.handlebars.mjml');
         let pMjml = path.join(__dirname, 'emails', `${view}.handlebars.mjml`);
         let pHandlebars = path.join(__dirname, 'emails', `${view}.handlebars`);
 
         log.debug(`Try ${pMjml} and ${pHandlebars}`);
-        log.debug(`Mjml format ${(fs.existsSync(pMjml) ? 'exists' : 'does not exist')}`);
+        log.debug(`Mjml format ${(fs.existsSync(pMjml) ? `exists, filePath: ${emailPath}` : 'does not exist')}`);
 
         let templateFile, mode = "none";
         if(fs.existsSync(pMjml)){
@@ -35,7 +36,9 @@ function render (view, locals) {
                 //Render mjml if available
                 if(mode === "mjml"){
                     let htmlOutput = mjml2html(data.toString(), {
-                        //minify: true
+                        minify: true,
+                        keepComments: false,
+                        filePath: emailPath
                     });
 
                     template = handlebars.compile(htmlOutput.html);
@@ -44,6 +47,7 @@ function render (view, locals) {
                     template = handlebars.compile(data.toString());
                 }
 
+                log.debug(`Had ${view} got ${template.length} characters`);
                 const result = template(locals);
                 res(result);
             });
